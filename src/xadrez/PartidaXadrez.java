@@ -17,16 +17,16 @@ public class PartidaXadrez {
     }
 
     public PecaXadrez[][] getPecas() {
-        PecaXadrez[][] pecas = new PecaXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
+        PecaXadrez[][] pecaxadrez = new PecaXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
 
         for (int i = 0; i < tabuleiro.getLinhas(); i++) {
             for (int j = 0; j < tabuleiro.getColunas(); j++) {
 
-                pecas[i][j] = (PecaXadrez) tabuleiro.peca(i, j);
+                pecaxadrez[i][j] = (PecaXadrez) tabuleiro.peca(i, j);
             }
         }
 
-        return pecas;
+        return pecaxadrez;
     }
 
     public PecaXadrez movimentacaoXadrez( PosicaoXadrez posicaoOrigem, PosicaoXadrez posicaoDestino){

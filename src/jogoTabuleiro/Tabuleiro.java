@@ -56,10 +56,10 @@ public class Tabuleiro {
         if (peca(posicao)== null){
             return null;
         }
-        Peca aux = peca(posicao);
-        aux.posicao =null;
+        Peca peca = peca(posicao);
+        peca.posicao =null;
         pecas[posicao.getLinha()][posicao.getColuna()] = null;
-        return aux;
+        return peca;
 
     }
 
