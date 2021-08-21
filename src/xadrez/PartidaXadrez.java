@@ -6,19 +6,24 @@ import jogoTabuleiro.Tabuleiro;
 import pecasXadrez.Rei;
 import pecasXadrez.Torre;
 
-import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class PartidaXadrez {
 
     private int turno;
     private Cor jogadorAtual;
     private Tabuleiro tabuleiro;
+    private List<Peca> pecasTabuleiro =new ArrayList<>();;
+    private List<Peca> pecasCapturadas =new ArrayList<>();
 
 
     public PartidaXadrez() {
         this.tabuleiro = new Tabuleiro(8, 8);
         turno = 1;
         jogadorAtual = Cor.BRANCO;
+
         configucaoInicial();
     }
 
@@ -67,6 +72,10 @@ public class PartidaXadrez {
         Peca pecaMovida = tabuleiro.removePeca(origem);
         Peca pecaCapturada = tabuleiro.removePeca(destino);
         tabuleiro.colocarPecas(pecaMovida, destino);
+        if ( pecaCapturada != null){
+            pecasTabuleiro.remove(pecaCapturada);
+            pecasCapturadas.add(pecaCapturada);
+        }
         return pecaCapturada;
     }
 
@@ -102,6 +111,7 @@ public class PartidaXadrez {
     private void colocarNovaPeca(char coluna, int linha, PecaXadrez pecaXadrez) {
 
         tabuleiro.colocarPecas(pecaXadrez, new PosicaoXadrez(coluna, linha).paraPosicao());
+        pecasTabuleiro.add(pecaXadrez);
 
     }
 
