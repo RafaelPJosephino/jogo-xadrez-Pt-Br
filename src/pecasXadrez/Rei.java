@@ -8,7 +8,7 @@ import xadrez.PecaXadrez;
 public class Rei extends PecaXadrez {
 
     public Rei( Tabuleiro tabuleiro,Cor cor) {
-        super(cor, tabuleiro);
+        super(tabuleiro,cor );
     }
 
 

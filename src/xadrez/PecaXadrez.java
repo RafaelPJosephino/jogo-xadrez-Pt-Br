@@ -11,7 +11,7 @@ public abstract class PecaXadrez extends Peca {
 
 
 
-    public PecaXadrez(Cor cor, Tabuleiro tabuleiro) {
+    public PecaXadrez(Tabuleiro tabuleiro,Cor cor) {
         super(tabuleiro);
         this.cor = cor;
     }
