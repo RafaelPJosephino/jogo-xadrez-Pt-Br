@@ -55,8 +55,10 @@ public class UI {
         mostrarPecasCapturadas(pecasCapturadas);
         System.out.println();
         System.out.println("Turno: "+ partidaXadrez.getTurno());
-        System.out.println("Esperando Jogador: "+partidaXadrez.getJogadorAtual());
-
+        System.out.println("Esperando Jogador: "+partidaXadrez.getCorJogadorAtual());
+        if (partidaXadrez.getCheck()){
+            System.out.println("Check!!!");
+        }
 
 
     }
