@@ -27,6 +27,7 @@ public class Peao extends PecaXadrez {
             Posicao aux2 = new Posicao(posicao.getLinha() - 1, posicao.getColuna());
             if (getTabuleiro().posicaoExistente(aux) && !getTabuleiro().temPeca(aux) && getTabuleiro().posicaoExistente(aux2) && !getTabuleiro().temPeca(aux2) && getContagemMovimento() == 0) {
                 mat[aux.getLinha()][aux.getColuna()] = true;
+                mat[aux2.getLinha()][aux2.getColuna()] = true;
             }
             aux.setValores(posicao.getLinha() - 1, posicao.getColuna() - 1);
             if (getTabuleiro().posicaoExistente(aux) && existePecaOponente(aux)) {
@@ -43,9 +44,10 @@ public class Peao extends PecaXadrez {
                 mat[aux.getLinha()][aux.getColuna()] = true;
             }
             aux.setValores(posicao.getLinha() + 2, posicao.getColuna());
-            Posicao aux2 = new Posicao(posicao.getLinha() - 1, posicao.getColuna());
+            Posicao aux2 = new Posicao(posicao.getLinha() + 1, posicao.getColuna());
             if (getTabuleiro().posicaoExistente(aux) && !getTabuleiro().temPeca(aux) && getTabuleiro().posicaoExistente(aux2) && !getTabuleiro().temPeca(aux2) && getContagemMovimento() == 0) {
                 mat[aux.getLinha()][aux.getColuna()] = true;
+                mat[aux2.getLinha()][aux2.getColuna()] = true;
             }
             aux.setValores(posicao.getLinha() + 1, posicao.getColuna() - 1);
             if (getTabuleiro().posicaoExistente(aux) && existePecaOponente(aux)) {
