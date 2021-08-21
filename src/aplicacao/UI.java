@@ -45,12 +45,13 @@ public class UI {
         }
     }
 
+
     public static void mostrarTabuleiro(PecaXadrez[][] pecas) {
 
         for (int i = 0; i < pecas.length; i++) {
             System.out.print((8 - i) + " ");
             for (int j = 0; j < pecas.length; j++) {
-                mostrarPecas(pecas[i][j]);
+                mostrarPecas(pecas[i][j],false);
 
             }
             System.out.println();
@@ -60,9 +61,27 @@ public class UI {
 
     }
 
-    private static void mostrarPecas(PecaXadrez pecas) {
+    public static void mostraTabuleiroPosiveis(PecaXadrez[][] pecas,boolean[][] posicaoPossiveis) {
+
+        for (int i = 0; i < pecas.length; i++) {
+            System.out.print((8 - i) + " ");
+            for (int j = 0; j < pecas.length; j++) {
+                mostrarPecas(pecas[i][j],posicaoPossiveis[i][j]);
+
+            }
+            System.out.println();
+        }
+        System.out.println("  a b c d e f g h");
+
+
+    }
+
+    private static void mostrarPecas(PecaXadrez pecas,boolean fundo) {
+        if (fundo){
+            System.out.print(ANSI_CYAN_BACKGROUND);
+        }
         if (pecas == null) {
-            System.out.print("-");
+            System.out.print("-"+ ANSI_RESET);
         } else {
             if (pecas.getCor() == Cor.BRANCO) {
                 System.out.print(ANSI_WHITE + pecas + ANSI_RESET);
