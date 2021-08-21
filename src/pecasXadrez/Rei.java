@@ -57,12 +57,12 @@ public class Rei extends PecaXadrez {
         if (getTabuleiro().posicaoExistente(aux) && podeMover(aux)){
             mat[aux.getLinha()][aux.getColuna()] =true;
         }
-        // cima-esquerda
+        // biaxo-esquerda
         aux.setValores(posicao.getLinha()+1,posicao.getColuna()-1);
         if (getTabuleiro().posicaoExistente(aux) && podeMover(aux)){
             mat[aux.getLinha()][aux.getColuna()] =true;
         }
-        // cima-direita
+        // baixo-direita
         aux.setValores(posicao.getLinha()+1,posicao.getColuna()+1);
         if (getTabuleiro().posicaoExistente(aux) && podeMover(aux)){
             mat[aux.getLinha()][aux.getColuna()] =true;
