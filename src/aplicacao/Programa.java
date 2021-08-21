@@ -38,6 +38,12 @@ public class Programa {
                     pecasCapturadas.add(pecaCapturada);
                 }
 
+                if (partidaXadrez.getPromocao() != null){
+                    System.out.print("Digite uma peca para ser promovida Bispo(B) Cavalo(C) Dama(D) Torre(T): ");
+                    String tipo = scanner.nextLine();
+                    partidaXadrez.colocarPecaPromovida(tipo);
+                }
+
             }catch (XadrezException e ){
                 System.out.println(e.getMessage());
                 scanner.nextLine();
