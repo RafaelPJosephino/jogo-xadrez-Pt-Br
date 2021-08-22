@@ -4,8 +4,6 @@ import jogoTabuleiro.Peca;
 import jogoTabuleiro.Posicao;
 import jogoTabuleiro.Tabuleiro;
 import pecasXadrez.*;
-
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,9 +13,9 @@ public class PartidaXadrez {
 
     private int turno;
     private Cor corJogadorAtual;
-    private Tabuleiro tabuleiro;
-    private List<Peca> pecasTabuleiro = new ArrayList<>();
-    private List<Peca> pecasCapturadas = new ArrayList<>();
+    private final Tabuleiro tabuleiro;
+    private final List<Peca> pecasTabuleiro = new ArrayList<>();
+    private final List<Peca> pecasCapturadas = new ArrayList<>() ;
     private boolean check;
     private boolean checkMate;
     private PecaXadrez enPassantVuneravel;
@@ -27,7 +25,6 @@ public class PartidaXadrez {
         this.tabuleiro = new Tabuleiro(8, 8);
         turno = 1;
         corJogadorAtual = Cor.BRANCO;
-
         configucaoInicial();
     }
 
@@ -85,11 +82,11 @@ public class PartidaXadrez {
         }
         if (testarCheck(corJogadorAtual)) {
             defazerMovimento(origem, destino, pecaCapturada);
-            throw new XadrezException("Nao e possivel se colocar em check.");
+            throw new XadrezException("Posicao de destino invalida! Nao e possivel se colocar em CHECK.");
         }
 
 
-        check = testarCheck(oponente(corJogadorAtual)) ? true : false;
+        check = testarCheck(oponente(corJogadorAtual));
         if (testarCheckMate(oponente(corJogadorAtual))) {
             checkMate = true;
         } else {
@@ -112,13 +109,13 @@ public class PartidaXadrez {
             throw new XadrezException("Nao a peca para ser promovida!");
         }
         if (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("D") && !tipo.equals("T")) {
-            throw new InvalidParameterException("Tipo invalido de promocao!");
+            return promocao;
         }
         Posicao posicao = promocao.getPosicaoXadrez().paraPosicao();
         Peca peca = tabuleiro.removePeca(posicao);
         pecasTabuleiro.remove(peca);
-        PecaXadrez novaPeca= novaPeca(tipo,promocao.getCor());
-        tabuleiro.colocarPecas(novaPeca,posicao);
+        PecaXadrez novaPeca = novaPeca(tipo, promocao.getCor());
+        tabuleiro.colocarPecas(novaPeca, posicao);
         pecasTabuleiro.add(novaPeca);
         return novaPeca;
 
@@ -242,14 +239,14 @@ public class PartidaXadrez {
 
     public void validarPosicaoOrigem(Posicao posicao) {
         if (!tabuleiro.temPeca(posicao)) {
-            throw new XadrezException("Nao existe peca na posicao origem");
+            throw new XadrezException("Nao existe peca na posicao de origem.");
         }
         if (corJogadorAtual != ((PecaXadrez) tabuleiro.peca(posicao)).getCor()) {
-            throw new XadrezException("Peca escolhida e do adversario");
+            throw new XadrezException("Nao e possivel mover pecas adversarias.");
         }
         if (!tabuleiro.peca(posicao).exiteMovimentoPossivel()) {
 
-            throw new XadrezException("Nao exitem movimentos possiveis para a peca escolhida ");
+            throw new XadrezException("Nao exite movimentos possiveis para a peca escolhida.");
         }
 
     }
@@ -257,7 +254,7 @@ public class PartidaXadrez {
     public void validarPosicaoDestino(Posicao origem, Posicao destino) {
 
         if (!tabuleiro.peca(origem).movimentoPossivel(destino)) {
-            throw new XadrezException("Peca escolhida nao pode se mover para " + destino);
+            throw new XadrezException("Movimento invalido! Nao e possivel se mover para possicao de destino." );
 
         }
 
@@ -289,7 +286,7 @@ public class PartidaXadrez {
         List<Peca> pecasOponentes = pecasTabuleiro.stream().filter(peca -> ((PecaXadrez) peca).getCor() == oponente(cor)).collect(Collectors.toList());
         for (Peca peca : pecasOponentes) {
             boolean[][] mat = peca.movimentoPossiveis();
-            if (mat[posicaoRei.getLinha()][posicaoRei.getColuna()] == true) {
+            if (mat[posicaoRei.getLinha()][posicaoRei.getColuna()]) {
                 return true;
             }
         }

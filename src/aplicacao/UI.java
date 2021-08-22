@@ -45,33 +45,35 @@ public class UI {
             int linha = Integer.parseInt(s.substring(1));
             return new PosicaoXadrez(coluna, linha);
         } catch (RuntimeException ex) {
-            throw new InputMismatchException("Erro lendo posicao de xadrez");
+            throw new InputMismatchException("Erro: Nao foi possível ler posicao do xadrez!");
         }
     }
 
-    public static void  mostrarPartida (PartidaXadrez partidaXadrez, List<PecaXadrez> pecasCapturadas) {
+    public static void mostrarPartida(PartidaXadrez partidaXadrez, List<PecaXadrez> pecasCapturadas) {
         mostrarTabuleiro(partidaXadrez.getPecas());
         System.out.println();
         mostrarPecasCapturadas(pecasCapturadas);
         System.out.println();
-        System.out.println("Turno: "+ partidaXadrez.getTurno());
-        if (!partidaXadrez.getCheckMate())  {
-        System.out.println("Esperando Jogador: "+partidaXadrez.getCorJogadorAtual());
-        if (partidaXadrez.getCheck()){
-            System.out.println("Check!!!");
-        }}else {
-            System.out.println("CheckMate");
-            System.out.println("Vencedor: "+partidaXadrez.getCorJogadorAtual());
+        System.out.println("Turno: " + partidaXadrez.getTurno());
+        if (!partidaXadrez.getCheckMate()) {
+            System.out.println("Esperando  por Jogador: " + partidaXadrez.getCorJogadorAtual());
+            if (partidaXadrez.getCheck()) {
+                System.out.println("CHECK!");
+            }
+        } else {
+            System.out.println("CHECKMATE!");
+            System.out.println("Vencedor: " + partidaXadrez.getCorJogadorAtual());
         }
 
 
     }
+
     public static void mostrarTabuleiro(PecaXadrez[][] pecas) {
 
         for (int i = 0; i < pecas.length; i++) {
             System.out.print((8 - i) + " ");
             for (int j = 0; j < pecas.length; j++) {
-                mostrarPecas(pecas[i][j],false);
+                mostrarPecas(pecas[i][j], false);
 
             }
             System.out.println();
@@ -82,12 +84,12 @@ public class UI {
     }
 
 
-    public static void mostraTabuleiroPosiveis(PecaXadrez[][] pecas,boolean[][] posicaoPossiveis) {
+    public static void mostraTabuleiroPosiveis(PecaXadrez[][] pecas, boolean[][] posicaoPossiveis) {
 
         for (int i = 0; i < pecas.length; i++) {
             System.out.print((8 - i) + " ");
             for (int j = 0; j < pecas.length; j++) {
-                mostrarPecas(pecas[i][j],posicaoPossiveis[i][j]);
+                mostrarPecas(pecas[i][j], posicaoPossiveis[i][j]);
 
             }
             System.out.println();
@@ -97,12 +99,12 @@ public class UI {
 
     }
 
-    private static void mostrarPecas(PecaXadrez pecas,boolean fundo) {
-        if (fundo){
+    private static void mostrarPecas(PecaXadrez pecas, boolean fundo) {
+        if (fundo) {
             System.out.print(ANSI_CYAN_BACKGROUND);
         }
         if (pecas == null) {
-            System.out.print("-"+ ANSI_RESET);
+            System.out.print("-" + ANSI_RESET);
         } else {
             if (pecas.getCor() == Cor.BRANCO) {
                 System.out.print(ANSI_WHITE + pecas + ANSI_RESET);
@@ -114,9 +116,9 @@ public class UI {
 
     }
 
-    private static void mostrarPecasCapturadas(List<PecaXadrez> pecasCapturadas){
-        List<PecaXadrez> brancas = pecasCapturadas.stream().filter(pecaXadrez -> pecaXadrez.getCor()== Cor.BRANCO).collect(Collectors.toList());
-        List<PecaXadrez> pretas = pecasCapturadas.stream().filter(pecaXadrez -> pecaXadrez.getCor()== Cor.PRETO).collect(Collectors.toList());
+    private static void mostrarPecasCapturadas(List<PecaXadrez> pecasCapturadas) {
+        List<PecaXadrez> brancas = pecasCapturadas.stream().filter(pecaXadrez -> pecaXadrez.getCor() == Cor.BRANCO).collect(Collectors.toList());
+        List<PecaXadrez> pretas = pecasCapturadas.stream().filter(pecaXadrez -> pecaXadrez.getCor() == Cor.PRETO).collect(Collectors.toList());
         System.out.println("Pecas capturadas: ");
         System.out.print("Brancas:");
         System.out.print(ANSI_WHITE);

@@ -6,6 +6,7 @@ import xadrez.PecaXadrez;
 import xadrez.PosicaoXadrez;
 import xadrez.XadrezException;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -20,44 +21,46 @@ public class Programa {
         while (!partidaXadrez.getCheckMate()) {
             try {
                 UI.limparTela();
-                UI.mostrarPartida(partidaXadrez,pecasCapturadas);
+                UI.mostrarPartida(partidaXadrez, pecasCapturadas);
 
                 System.out.println();
-                System.out.print("Origem: ");
+                System.out.print("Peca Origem: ");
                 PosicaoXadrez origem = UI.LerPosicaoXadrez(scanner);
 
-                boolean[][] posicaoPossiveis= partidaXadrez.movimentosPossiveis(origem);
+                boolean[][] posicaoPossiveis = partidaXadrez.movimentosPossiveis(origem);
                 UI.limparTela();
-                UI.mostraTabuleiroPosiveis(partidaXadrez.getPecas(),posicaoPossiveis);
+                UI.mostraTabuleiroPosiveis(partidaXadrez.getPecas(), posicaoPossiveis);
                 System.out.println();
-                System.out.print("Destino: ");
+                System.out.print("Peca Destino: ");
                 PosicaoXadrez destino = UI.LerPosicaoXadrez(scanner);
 
                 PecaXadrez pecaCapturada = partidaXadrez.movimentacaoXadrez(origem, destino);
-                if (pecaCapturada != null){
+                if (pecaCapturada != null) {
                     pecasCapturadas.add(pecaCapturada);
                 }
 
-                if (partidaXadrez.getPromocao() != null){
-                    System.out.print("Digite uma peca para ser promovida Bispo(B) Cavalo(C) Dama(D) Torre(T): ");
-                    String tipo = scanner.nextLine();
+                if (partidaXadrez.getPromocao() != null) {
+                    System.out.print("Entre com a peca a ser promovida, Bispo(B) Cavalo(C) Dama(D) Torre(T): ");
+                    String tipo = scanner.nextLine().toUpperCase();
+                    while (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("D") && !tipo.equals("T")) {
+                        System.out.println("Peca invalida! entre novamente uma peca, Bispo(B) Cavalo(C) Dama(D) Torre(T): ");
+                        tipo = scanner.nextLine().toUpperCase();
+                    }
+
                     partidaXadrez.colocarPecaPromovida(tipo);
                 }
 
-            }catch (XadrezException e ){
+            } catch (XadrezException e) {
                 System.out.println(e.getMessage());
                 scanner.nextLine();
-            }catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
                 scanner.nextLine();
             }
 
         }
         UI.limparTela();
-        UI.mostrarPartida(partidaXadrez,pecasCapturadas);
-
-
-
+        UI.mostrarPartida(partidaXadrez, pecasCapturadas);
 
 
     }
